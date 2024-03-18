@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class QueueController {
 
@@ -21,9 +23,9 @@ public class QueueController {
         return queue;
     }
 
-    @GetMapping("/getAllShop")
-    public ShopEntity shopList() {
-        return shopRepo.findByShopId("S001");
+    @GetMapping("protected/getAllShop")
+    public List<ShopEntity> shopList() {
+        return shopRepo.findAll();
     }
 
 }
