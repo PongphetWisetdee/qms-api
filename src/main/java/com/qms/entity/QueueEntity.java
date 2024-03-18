@@ -23,17 +23,20 @@ public class QueueEntity {
     private String queueTime;
 
     @Column(name="queue_status")
-    private String queue_status;
+    private String queueStatus;
 
     @Column(name="queue_service")
-    private String queue_service;
+    private String queueService;
 
     @Column(name="queue_price")
-    private String queue_price;
+    private String queuePrice;
 
     @Column(name="queue_shop")
-    private String queue_shop;
+    private String queueShop;
 
     @Column(name="queue_employee")
-    private String queue_employee;
+    private String queueEmployee;
+
+    @Column(name="queue_timeout")
+    private String queueTimeout;
 }
