@@ -1,31 +1,24 @@
 package com.qms.controller;
 
-import com.qms.entity.ShopEntity;
-import com.qms.repository.ShopRepository;
-import com.qms.response.QueueResponse;
+import com.qms.request.QueueReq;
+import com.qms.response.QueueRes;
+import com.qms.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/queue")
 public class QueueController {
 
     @Autowired
-    private ShopRepository shopRepo;
+    private QueueService queueService;
 
-    @GetMapping("/getQueue")
-    public QueueResponse getQueue() {
-        QueueResponse queue = new QueueResponse();
-        queue.setId("01");
-        queue.setName("queue");
-        return queue;
-    }
-
-    @GetMapping("protected/getAllShop")
-    public List<ShopEntity> shopList() {
-        return shopRepo.findAll();
+    @PostMapping("/listQueue")
+    public List<QueueRes> listQueue(@RequestBody QueueReq request) throws ParseException {
+        return queueService.listQueue(request);
     }
 
 }
