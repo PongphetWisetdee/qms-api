@@ -1,9 +1,6 @@
 package com.qms.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Date;
 
@@ -22,21 +19,22 @@ public class QueueEntity {
     @Column(name="queue_time")
     private String queueTime;
 
-    @Column(name="queue_status")
-    private String queueStatus;
-
-    @Column(name="queue_service")
-    private String queueService;
-
     @Column(name="queue_price")
     private String queuePrice;
 
-    @Column(name="queue_shop")
-    private String queueShop;
-
-    @Column(name="queue_employee")
-    private String queueEmployee;
-
     @Column(name="queue_timeout")
-    private String queueTimeout;
+    private String queueTimeOut;
+
+    @Column(name="employee_id")
+    private String employeeId;
+
+    @Column(name="status_id")
+    private String statusId;
+
+    @Column(name="service_id")
+    private String serviceId;
+
+    @Column(name="shop_id")
+    private String shopId;
+
 }

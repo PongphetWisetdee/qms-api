@@ -1,10 +1,9 @@
 package com.qms.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -18,7 +17,7 @@ public class EmployeeEntity {
     @Column(name="employee_name")
     private String employeeName;
 
-    @Column(name="employee_shop")
-    private String employeeShop;
+    @Column(name="shop_id")
+    private String shopId;
 
 }

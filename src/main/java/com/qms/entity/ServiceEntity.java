@@ -1,10 +1,9 @@
 package com.qms.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -24,10 +23,10 @@ public class ServiceEntity {
     @Column(name="service_time")
     private String serviceTime;
 
-    @Column(name="servicePrice")
-    private String price;
+    @Column(name="service_price")
+    private String servicePrice;
 
-    @Column(name="service_shop")
-    private String serviceShop;
+    @Column(name="shop_id")
+    private String shopId;
 
 }
