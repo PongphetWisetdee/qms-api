@@ -10,7 +10,7 @@
 
 	</parent>
 	<groupId>com.qms</groupId>
-	<artifactId>qms-api</artifactId>
+	<artifactId>qms_api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>qms-api</name>
 	<description>Queue Management System</description>
