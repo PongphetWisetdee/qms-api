@@ -2,7 +2,9 @@ package com.qms.controller;
 
 import com.qms.entity.QueueEntity;
 import com.qms.request.QueueRequest;
+import com.qms.request.QueueUpdateRequest;
 import com.qms.response.QueueResponse;
+import com.qms.response.QueueUpdateResponse;
 import com.qms.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +26,13 @@ public class QueueController {
     }
 
     @PostMapping("/queueListForWeb")
-    public  List<QueueResponse> queueListForWeb(@RequestBody QueueRequest request) throws SQLException {
-        return  queueService.getQueueByDateForWeb(request);
+    public List<QueueResponse> queueListForWeb(@RequestBody QueueRequest request) throws SQLException {
+        return queueService.getQueueByDateForWeb(request);
+    }
+
+    @PostMapping("/queueUpdateStatus")
+    public QueueUpdateResponse queueUpdateStatus(@RequestBody QueueUpdateRequest request) throws SQLException {
+        return queueService.updateQueueStatus(request);
     }
 
 }

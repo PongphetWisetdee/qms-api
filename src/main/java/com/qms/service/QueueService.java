@@ -3,9 +3,12 @@ package com.qms.service;
 import com.qms.entity.QueueEntity;
 import com.qms.repository.QueueRepository;
 import com.qms.request.QueueRequest;
+import com.qms.request.QueueUpdateRequest;
 import com.qms.response.QueueResponse;
+import com.qms.response.QueueUpdateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
@@ -121,5 +124,31 @@ public class QueueService {
         }
 
         return queueResponseList;
+    }
+
+    public QueueUpdateResponse updateQueueStatus (QueueUpdateRequest request) throws SQLException {
+
+        QueueUpdateResponse response = new QueueUpdateResponse();
+        response.setQueueId(request.getQueueId());
+
+        String query = "UPDATE queue SET status_id = '" + request.getStatusId() + "' WHERE queue_id = '" + request.getQueueId() + "';";
+
+        Connection connection = null;
+        Statement statement = null;
+
+        try {
+            connection = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPass);
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+            response.setStatusUpdateSuccess(true);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            response.setStatusUpdateSuccess(false);
+        }finally {
+            assert statement != null;
+            statement.close();
+            connection.close();
+        }
+        return response;
     }
 }
