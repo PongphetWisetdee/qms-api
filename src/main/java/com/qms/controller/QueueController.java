@@ -2,6 +2,7 @@ package com.qms.controller;
 
 import com.qms.entity.QueueEntity;
 import com.qms.request.QueueRequest;
+import com.qms.request.QueueUpdateForWebRequest;
 import com.qms.request.QueueUpdateRequest;
 import com.qms.response.QueueResponse;
 import com.qms.response.QueueUpdateResponse;
@@ -33,6 +34,11 @@ public class QueueController {
     @PostMapping("/queueUpdateStatus")
     public QueueUpdateResponse queueUpdateStatus(@RequestBody QueueUpdateRequest request) throws SQLException {
         return queueService.updateQueueStatus(request);
+    }
+
+    @PostMapping("/queueUpdateStatusForWeb")
+    public QueueUpdateResponse queueUpdateStatusForWeb(@RequestBody QueueUpdateForWebRequest request) throws SQLException {
+        return queueService.updateQueueForWebStatus(request);
     }
 
 }

@@ -3,6 +3,7 @@ package com.qms.service;
 import com.qms.entity.QueueEntity;
 import com.qms.repository.QueueRepository;
 import com.qms.request.QueueRequest;
+import com.qms.request.QueueUpdateForWebRequest;
 import com.qms.request.QueueUpdateRequest;
 import com.qms.response.QueueResponse;
 import com.qms.response.QueueUpdateResponse;
@@ -132,6 +133,43 @@ public class QueueService {
         response.setQueueId(request.getQueueId());
 
         String query = "UPDATE queue SET status_id = '" + request.getStatusId() + "' WHERE queue_id = '" + request.getQueueId() + "';";
+
+        Connection connection = null;
+        Statement statement = null;
+
+        try {
+            connection = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPass);
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+            response.setStatusUpdateSuccess(true);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            response.setStatusUpdateSuccess(false);
+        }finally {
+            assert statement != null;
+            statement.close();
+            connection.close();
+        }
+        return response;
+    }
+
+    public QueueUpdateResponse updateQueueForWebStatus (QueueUpdateForWebRequest request) throws SQLException {
+
+        QueueUpdateResponse response = new QueueUpdateResponse();
+        response.setQueueId(request.getQueueId());
+
+        String query = "";
+
+        if (request.getIsQueueExist().equals("true")) {
+            query = "UPDATE queue SET status_id = '" + request.getStatusId() + "' WHERE queue_id = '" + request.getQueueId() + "';";
+        } else {
+            String time = request.getQueueId().substring(0, 2) + "." + request.getQueueId().substring(2, 4);;
+            String date = request.getQueueId().substring(8, 12) + "-" + request.getQueueId().substring(6, 8) + "-" + request.getQueueId().substring(4, 6);
+
+            query = "INSERT INTO " +
+                    "queue (queue_id, queue_date, queue_time, status_id, service_id, queue_price, shop_id, employee_id, queue_timeout) " +
+                    "VALUES ('" + request.getQueueId() + "', '" + date + "'::date, '"+ time +"', '"+ request.getStatusId() +"', 'SER0001', '', 'S001', 'E001', '');";
+        }
 
         Connection connection = null;
         Statement statement = null;
