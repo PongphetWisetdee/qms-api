@@ -73,7 +73,8 @@ public class QueueService {
         return entity;
     }
 
-    public List<QueueResponseForWeb> getQueueByDateForWeb(QueueRequest request) throws SQLException {
+    public List<QueueResponse> getQueueByDateForWeb(QueueRequest request) throws SQLException {
+    //public List<QueueResponseForWeb> getQueueByDateForWeb(QueueRequest request) throws SQLException {
 
         String query = "SELECT " + "queue.queue_id, " +
                 "queue.queue_date, " +
@@ -127,50 +128,52 @@ public class QueueService {
             connection.close();
         }
 
-        for (QueueResponse res : queueResponseList) {
-            System.out.println(res);
-        }
+        return queueResponseList;
 
-        List<QueueResponseForWeb> responses = new ArrayList<>();
-
-        System.out.println(request.getQueueDate());
-
-        String[] arrOfStr = request.getQueueDate().split("-");
-        for (String s : arrOfStr) {
-            System.out.println(s);
-        }
-        String date = arrOfStr[2];
-        String mouth = arrOfStr[1];
-        String year = arrOfStr[0];
-
-        for (String s : TIME) {
-            QueueResponseForWeb response = new QueueResponseForWeb();
-            response.setQueueTime(s);
-            response.setQueueId(s.replace(".", "") + date + mouth + year);
-            response.setQueueDate(year + "-" + mouth + "-" + date);
-            response.setQueuePrice(null);
-            response.setQueueTimeout(null);
-            response.setShopId("S001");
-            response.setServiceId("01");
-            response.setStatusId("00");
-            response.setEmployeeId("E001");
-            response.setEmployeeName("Ter");
-            response.setIsQueueExist("N");
-            responses.add(response);
-        }
-
-        for (int i = 0; i < responses.size(); i++) {
-            for (int j = 0; j < queueResponseList.size(); j++) {
-                if (responses.get(i).getQueueId().equals(queueResponseList.get(j).getQueueId())) {
-                    QueueResponseForWeb dataForWeb = setToWeb(queueResponseList, j);
-                    responses.set(i, dataForWeb);
-                }
-            }
-        }
-        for (QueueResponseForWeb res :responses) {
-            System.out.println(res);
-        }
-        return responses;
+//        for (QueueResponse res : queueResponseList) {
+//            System.out.println(res);
+//        }
+//
+//        List<QueueResponseForWeb> responses = new ArrayList<>();
+//
+//        System.out.println(request.getQueueDate());
+//
+//        String[] arrOfStr = request.getQueueDate().split("-");
+//        for (String s : arrOfStr) {
+//            System.out.println(s);
+//        }
+//        String date = arrOfStr[2];
+//        String mouth = arrOfStr[1];
+//        String year = arrOfStr[0];
+//
+//        for (String s : TIME) {
+//            QueueResponseForWeb response = new QueueResponseForWeb();
+//            response.setQueueTime(s);
+//            response.setQueueId(s.replace(".", "") + date + mouth + year);
+//            response.setQueueDate(year + "-" + mouth + "-" + date);
+//            response.setQueuePrice(null);
+//            response.setQueueTimeout(null);
+//            response.setShopId("S001");
+//            response.setServiceId("01");
+//            response.setStatusId("00");
+//            response.setEmployeeId("E001");
+//            response.setEmployeeName("Ter");
+//            response.setIsQueueExist("N");
+//            responses.add(response);
+//        }
+//
+//        for (int i = 0; i < responses.size(); i++) {
+//            for (int j = 0; j < queueResponseList.size(); j++) {
+//                if (responses.get(i).getQueueId().equals(queueResponseList.get(j).getQueueId())) {
+//                    QueueResponseForWeb dataForWeb = setToWeb(queueResponseList, j);
+//                    responses.set(i, dataForWeb);
+//                }
+//            }
+//        }
+//        for (QueueResponseForWeb res :responses) {
+//            System.out.println(res);
+//        }
+//        return responses;
     }
 
     private static QueueResponseForWeb setToWeb(List<QueueResponse> queueResponseList, int j) {
@@ -223,7 +226,8 @@ public class QueueService {
 
         String query = "";
 
-        if (request.getIsQueueExist().equals("Y")) {
+        if (request.getIsQueueExist().equals("true")) {
+        //if (request.getIsQueueExist().equals("Y")) {
             query = "UPDATE queue SET status_id = '" + request.getStatusId() + "' WHERE queue_id = '" + request.getQueueId() + "';";
         } else {
             String time = request.getQueueId().substring(0, 2) + "." + request.getQueueId().substring(2, 4);;

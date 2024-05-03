@@ -28,7 +28,8 @@ public class QueueController {
     }
 
     @PostMapping("/queueListForWeb")
-    public List<QueueResponseForWeb> queueListForWeb(@RequestBody QueueRequest request) throws SQLException {
+    public List<QueueResponse> queueListForWeb(@RequestBody QueueRequest request) throws SQLException {
+    //public List<QueueResponseForWeb> queueListForWeb(@RequestBody QueueRequest request) throws SQLException {
         return queueService.getQueueByDateForWeb(request);
     }
 
