@@ -5,6 +5,7 @@ import com.qms.request.QueueRequest;
 import com.qms.request.QueueUpdateForWebRequest;
 import com.qms.request.QueueUpdateRequest;
 import com.qms.response.QueueResponse;
+import com.qms.response.QueueResponseForWeb;
 import com.qms.response.QueueUpdateResponse;
 import com.qms.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class QueueController {
     }
 
     @PostMapping("/queueListForWeb")
-    public List<QueueResponse> queueListForWeb(@RequestBody QueueRequest request) throws SQLException {
+    public List<QueueResponseForWeb> queueListForWeb(@RequestBody QueueRequest request) throws SQLException {
         return queueService.getQueueByDateForWeb(request);
     }
 
