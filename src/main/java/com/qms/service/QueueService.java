@@ -176,6 +176,106 @@ public class QueueService {
 //        return responses;
     }
 
+    public List<QueueResponseForWeb> getQueueByDateForWebTailWind(QueueRequest request) throws SQLException {
+
+    String query = "SELECT " + "queue.queue_id, " +
+            "queue.queue_date, " +
+            "queue.queue_time, " +
+            "queue.queue_price, " +
+            "queue.queue_timeout, " +
+            "queue.employee_id, " +
+            "employee.employee_name, " +
+            "queue.service_id, " +
+            "queue.status_id, " +
+            "queue.shop_id " +
+            "From queue " +
+            "INNER JOIN employee ON queue.employee_id = employee.employee_id " +
+            "WHERE queue.queue_date = ':queueDate' AND queue.shop_id = ':shopId'";
+
+    String queryWithParam = query
+            .replace(":queueDate", request.getQueueDate())
+            .replace(":shopId", request.getShopId());
+
+    Connection connection = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+
+    List<QueueResponse> queueResponseList = new ArrayList<>();
+
+        try {
+        connection = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPass);
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(queryWithParam);
+
+        while (resultSet.next()) {
+            QueueResponse queueRes = new QueueResponse();
+            queueRes.setQueueId(resultSet.getString("queue_id"));
+            queueRes.setQueueDate(resultSet.getString("queue_date"));
+            queueRes.setQueueTime(resultSet.getString("queue_time"));
+            queueRes.setQueuePrice(resultSet.getString("queue_price"));
+            queueRes.setQueueTimeout(resultSet.getString("queue_timeout"));
+            queueRes.setEmployeeId(resultSet.getString("employee_id"));
+            queueRes.setEmployeeName(resultSet.getString("employee_name"));
+            queueRes.setStatusId(resultSet.getString("status_id"));
+            queueRes.setServiceId(resultSet.getString("status_id"));
+            queueRes.setShopId(resultSet.getString("shop_id"));
+            queueResponseList.add(queueRes);
+        }
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+    } finally {
+        assert resultSet != null;
+        resultSet.close();
+        statement.close();
+        connection.close();
+    }
+
+        for (QueueResponse res : queueResponseList) {
+            System.out.println(res);
+        }
+
+        List<QueueResponseForWeb> responses = new ArrayList<>();
+
+        System.out.println(request.getQueueDate());
+
+        String[] arrOfStr = request.getQueueDate().split("-");
+        for (String s : arrOfStr) {
+            System.out.println(s);
+        }
+        String date = arrOfStr[2];
+        String mouth = arrOfStr[1];
+        String year = arrOfStr[0];
+
+        for (String s : TIME) {
+            QueueResponseForWeb response = new QueueResponseForWeb();
+            response.setQueueTime(s);
+            response.setQueueId(s.replace(".", "") + date + mouth + year);
+            response.setQueueDate(year + "-" + mouth + "-" + date);
+            response.setQueuePrice(null);
+            response.setQueueTimeout(null);
+            response.setShopId("S001");
+            response.setServiceId("01");
+            response.setStatusId("00");
+            response.setEmployeeId("E001");
+            response.setEmployeeName("Ter");
+            response.setIsQueueExist("N");
+            responses.add(response);
+        }
+
+        for (int i = 0; i < responses.size(); i++) {
+            for (int j = 0; j < queueResponseList.size(); j++) {
+                if (responses.get(i).getQueueId().equals(queueResponseList.get(j).getQueueId())) {
+                    QueueResponseForWeb dataForWeb = setToWeb(queueResponseList, j);
+                    responses.set(i, dataForWeb);
+                }
+            }
+        }
+        for (QueueResponseForWeb res :responses) {
+            System.out.println(res);
+        }
+        return responses;
+}
+
     private static QueueResponseForWeb setToWeb(List<QueueResponse> queueResponseList, int j) {
         QueueResponseForWeb dataForWeb = new QueueResponseForWeb();
         dataForWeb.setQueueId(queueResponseList.get(j).getQueueId());

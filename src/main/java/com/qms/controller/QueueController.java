@@ -33,6 +33,11 @@ public class QueueController {
         return queueService.getQueueByDateForWeb(request);
     }
 
+    @PostMapping("/queueListForWebTailWind")
+    public List<QueueResponseForWeb> queueListForWebTailWind(@RequestBody QueueRequest request) throws SQLException {
+        return queueService.getQueueByDateForWebTailWind(request);
+    }
+
     @PostMapping("/queueUpdateStatus")
     public QueueUpdateResponse queueUpdateStatus(@RequestBody QueueUpdateRequest request) throws SQLException {
         return queueService.updateQueueStatus(request);
