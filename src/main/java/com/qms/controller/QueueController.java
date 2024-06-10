@@ -48,4 +48,9 @@ public class QueueController {
         return queueService.updateQueueForWebStatus(request);
     }
 
+    @PostMapping("/queueUpdateStatusForWebTailWind")
+    public QueueUpdateResponse updateQueueForWebTailWindStatus(@RequestBody QueueUpdateForWebRequest request) throws SQLException {
+        return queueService.updateQueueForWebTailWindStatus(request);
+    }
+
 }
