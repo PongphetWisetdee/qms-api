@@ -34,7 +34,7 @@ public class WebSecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         //configuration.setAllowedOrigins(List.of("*"));
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://qms-web-77ejhpt2zq-as.a.run.app/"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://qms-web-77ejhpt2zq-as.a.run.app/", "https://qms-web-tailwind-77ejhpt2zq-as.a.run.app/"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.addAllowedHeader("*");
