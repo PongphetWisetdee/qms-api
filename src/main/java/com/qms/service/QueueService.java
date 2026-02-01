@@ -32,7 +32,7 @@ public class QueueService {
     @Value("${spring.datasource.password}")
     private String jdbcPass;
 
-    //edit
+    //edit test
     public static final List<String> TIME = List.of("10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00");
 
     public QueueEntity getQueueById(String queueId) throws SQLException {
