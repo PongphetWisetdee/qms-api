@@ -480,7 +480,7 @@ public class QueueService {
     }
 
     private List<LocalTime> getWorkingHours() {
-        return IntStream.rangeClosed(10, 18)
+        return IntStream.rangeClosed(10, 19)
                 .mapToObj(hour -> LocalTime.of(hour, 0))
                 .toList();
     }
