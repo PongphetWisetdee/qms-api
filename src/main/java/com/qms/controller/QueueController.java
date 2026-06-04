@@ -6,13 +6,17 @@ import com.qms.request.QueueUpdateForWebRequest;
 import com.qms.request.QueueUpdateRequest;
 import com.qms.response.QueueResponse;
 import com.qms.response.QueueResponseForWeb;
+import com.qms.response.QueueSlotResponse;
 import com.qms.response.QueueUpdateResponse;
 import com.qms.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -51,6 +55,19 @@ public class QueueController {
     @PostMapping("/queueUpdateStatusForWebTailWind")
     public QueueUpdateResponse updateQueueForWebTailWindStatus(@RequestBody QueueUpdateForWebRequest request) throws SQLException {
         return queueService.updateQueueForWebTailWindStatus(request);
+    }
+
+    @PostMapping("/queueUpdateStatusForWebTailWind2")
+    public QueueUpdateResponse updateQueueForWebTailWindStatusShop2(@RequestBody QueueUpdateForWebRequest request) throws SQLException {
+        return queueService.updateQueueForWebTailWindStatusShop2(request);
+    }
+
+    @GetMapping("/daily-schedule")
+    public ResponseEntity<List<QueueSlotResponse>> getDailySchedule(
+            @RequestParam String shopId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate queueDate) {
+        List<QueueSlotResponse> schedule = queueService.getDailySchedule(shopId, queueDate);
+        return ResponseEntity.ok(schedule);
     }
 
 }
